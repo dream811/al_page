@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Yajra\DataTables\DataTablesServiceProvider::class,
-
+        Brokenice\LaravelMysqlPartition\PartitionServiceProvider::class,
     ],
 
     /*

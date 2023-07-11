@@ -17,9 +17,40 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'uuid',
+        'level_id',
+        'upper_id',
+        'tree_list',
+        'account',
+        'account_number',
+        'account_holder',
+        'nickname',
+        'phone',
         'email',
+        'email_verified_at',
         'password',
+        'remember_token',
+        'created_at',
+        'updated_at',
+        'balance',
+        'bank_name',
+        'alert_on_balance',
+        'cash',
+        'commission_rate',
+        'detail_callback',
+        'token',
+        'callback_token',
+        'callback_url',
+        'detail_callback_url',
+        'domain_line',
+        'gbn',
+        'login_at',
+        'login_ip',
+        'provider_oct',
+        'provider_pg',
+        'request_balance',
+        'state',
+        'transfer_wallet'
     ];
 
     /**
@@ -40,4 +71,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function upperAgent()
+    {
+        return $this->belongsTo(User::class, 'upper_id', 'id');
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(AgentLevel::class, 'level_id', 'id');
+    }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\RUser;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DateTime;
@@ -32,7 +31,7 @@ class UserController extends Controller
     {
         $header = $request->header('Authorization');
         if($header == "Authorization"){
-            return RUser::all();
+            return User::first();
         }else{
             return response(['message'=>'Invalid token'], 405);
         }
@@ -42,7 +41,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $header = $request->header('Authorization');
-        if($header == "authorization"){
+        if($header == "Authorization"){
             return '{
                 "id": 1,
                 "username": "name",

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('user.layouts.app')
 @section('script')
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
 @endsection

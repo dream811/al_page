@@ -1,4 +1,7 @@
 @extends('user.layouts.app')
+{{-- @push('scripts')
+    <script src="/example.js"></script>
+@endpush --}}
 @section('content')
     <div class="content-wrapper">
       <div class="page-header">
@@ -18,74 +21,40 @@
               <p class="card-description"> Add class <code>.table-striped</code>
               </p> --}}
               <div class="row ">
-                <div class="col form-group">
+                <div class="col-3 form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">소속에이전트아이디</span>
+                      <span class="filter-input input-group-text">소속에이전트아이디</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="filter-input form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
                 </div>
                 <div class="col form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">유저아이디</span>
+                      <span class="filter-input input-group-text">유저아이디</span>
                     </div>
-                    <input type="text" class="form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="filter-input form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
                 </div>
-                
                 <div class="col form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">유저닉네임</span>
+                      <span class="filter-input input-group-text" >유저닉네임</span>
                     </div>
-                    <input type="text" class="form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="filter-input form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
                 </div>
                 <div class="col form-group">
-                    <button type="button" class="btn btn-gradient-success float-right" style="text-align:right ;float:right; right:0px;">검색</button>
+                  <button type="button" class="btn btn-gradient-success float-right" style="text-align:right ;float:right; right:0px;">검색</button>
                 </div>
               </div>
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th> 번호 </th>
-                    <th> 소속에이전트 </th>
-                    <th> 유저 </th>
-                    <th> 금월 베팅금 </th>
-                    <th> 금월 당첨금 </th>
-                    <th> 금월 손익금 </th>
-                    <th> 현재 보유금 </th>
-                    <th> 현재 보유포인트 </th>
-                    <th> 가입시각 </th>
-                    <th> 최근 접속시각 </th>
-                    <th> 관리 </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="py-1">
-                      <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
-                    </td>
-                    <td> Herman Beck </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                    <td> $ 77.99 </td>
-                    <td> May 15, 2015 </td>
-                    <td> May 15, 2015 </td>
-                    <td> May 15, 2015 </td>
-                    <td> $ 77.99 </td>
-                    <td>
-                      <button type="button" class="btn btn-xs btn-gradient-primary me-2">수정</button>
-                      <button type="button" class="btn btn-xs btn-gradient-danger">삭제</button>
-                    </td>
-                  </tr>
-                  
-                </tbody>
+			  <style>
+				.text-right{
+					text-align: right !important;
+				}
+			  </style>
+              <table id="Table" class="table dataTable no-footer table-hover table-striped text-xs" aria-describedby="order-listing_info" cellspacing="0" width="100%">
               </table>
             </div>
           </div>
@@ -111,29 +80,86 @@
             window.open('/admin/user/edit/' + userId, '정보 수정', 'scrollbars=1, resizable=1, width=1000, height=620');
             return false;
         });
-        $('body').on('change', '.chk-is-use', function () {
-            var status = $(this).is(':checked') ? 1 : 0;
-            if(!confirm('정식회원으로 등록하시겠습니까?')){$(this).prop('checked', status == 1 ? false : true);return}
-            var userId = $(this).attr('data-id');
-            var action = '/admin/user/state/' + userId;
+
+
+        var table = $('#Table').DataTable({
+            processing: true,
+            serverSide: true,
+            // searching: false,
+            scrollY: "100%",
+            ajax: {
+                url: "{{ route('user.agent.agentList') }}"
+            },
+            columns: [
+                {title: "No", data: 'DT_RowIndex', name: 'DT_RowIndex', 'render' : null, orderable  : false, 'searchable' : false, 'exportable' : false, 'printable'  : true, width:'30px'},
+                {title: "소속에이전트", data: 'upper', name: 'upper'},
+                {title: "에이전트", data: 'account', name: 'account'},
+                {title: "에이전트등급", data: 'level_id', name: 'level_id'},
+                {title: "보유포인트", data: 'balance', name: 'balance', className: 'text-right'},
+                {title: "보유캐쉬", data: 'cash', name: 'cash', className: 'text-right'},
+                {title: "포인트요율", data: 'commission_rate', name: 'commission_rate', className: 'text-right'},
+                {title: "상태", data: 'state', name: 'state',
+					render: function (data, type, row) {
+						if(data == 1){
+							return "승인";
+						}else if(data == 2){
+							return "미승인";
+						}
+						
+                    }
+				},
+                {title: "등록일", data: 'created_at', name: 'created_at',
+                    render: function (data, type, row) {
+						var date = new Date(data);
+						return moment(data).format('YYYY-MM-DD  HH:mm:ss');
+                    }
+                },
+                
+                // {title: "처리금액", data: 'action', name: 'action', width: '140px', orderable:false, searchable: false, className: "text-center"},
+            ],
+			columnDefs:[
+				{
+					targets: 4,
+					render: $.fn.dataTable.render.number(',', '.', 0, 'P')
+				},
+				{
+					targets: 5,
+					render: $.fn.dataTable.render.number(',', '.', 0, '$')
+				},
+				{
+					targets: 6,
+					render: $.fn.dataTable.render.number(',', '.', 0, '')
+				}
+			],
+            responsive: true, lengthChange: true,
+            buttons: ["copy", "csv", "excel", "pdf"]
+        }).buttons().container().appendTo('#userTable_wrapper .col-md-6:eq(0)');
+
+
+
+        // $('body').on('change', '.chk-is-use', function () {
+        //     var status = $(this).is(':checked') ? 1 : 0;
+        //     if(!confirm('정식회원으로 등록하시겠습니까?')){$(this).prop('checked', status == 1 ? false : true);return}
+        //     var userId = $(this).attr('data-id');
+        //     var action = '/admin/user/state/' + userId;
             
-            $.ajax({
-                url: action,
-                data: {status},
-                type: "POST",
-                dataType: 'json',
-                success: function ({status, data}) {
-                  if(status == "success"){
-                      refreshTable();
-                      alert('정식회원으로 등록하였습니다.');
-                  }else{
-                      alert('정식회원등록에 실패하였습니다.');
-                  }
-              },
-              error: function (data) {
-              }
-            });
-        });
+        //     $.ajax({
+        //         url: action,
+        //         data: {status},
+        //         type: "POST",
+        //         dataType: 'json',
+        //         success: function ({status, data}) {
+        //           if(status == "success"){
+        //               refreshTable();
+        //               alert('정식회원으로 등록하였습니다.');
+        //           }else{
+        //               alert('정식회원등록에 실패하였습니다.');
+        //           }
+        //       },
+        //       error: function (data) {
+        //       }
+        //     });
+        // });
         // $('body').on('click', '.btnDelete', function () {
         //     if(!confirm('한번삭제한 회원정보는 되살릴수 없습니다. 정말삭제하시겠습니까?')){return}
         //     var userId = $(this).attr('data-id');
@@ -185,7 +211,7 @@
             return false;
         });
         function refreshTable() {
-            $('#userTable').DataTable().ajax.reload();
+            $('#Table').DataTable().ajax.reload();
         }
     </script>
 @endpush

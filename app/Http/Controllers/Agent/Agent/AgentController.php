@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
@@ -57,13 +58,18 @@ class AgentController extends Controller
             // $agents = User::all();
             // return response()->json(["status" => "success", "data" => $agents]);
 
-            $users = User::all();
+            $users = User::where('tree_list', 'LIKE', '%('.Auth::id().')%')->get();
             return DataTables::of($users)
             ->addIndexColumn()
-            ->addColumn('agent', function ($row)
+            ->addColumn('upper', function ($row)
             {
-                return $row->agent->account;
-                
+                if($row->upperAgent != null){
+                    return $row->upperAgent->account;    
+                }
+                return "";
+            })
+            ->editColumn('level_id', function($row){
+                return $row->level->name;
             })
             ->make(true);
         }

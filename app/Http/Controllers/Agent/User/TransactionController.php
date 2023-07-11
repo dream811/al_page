@@ -31,21 +31,35 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $title="일별정산";
+        $title="트랜잭션내역";
         $fromDate = date("Y-m-d", strtotime("-1 months"));
         $toDate = date("Y-m-d");
 
         if ($request->ajax()) {
             $transactions = Transaction::all();
             return DataTables::of($transactions)
+            ->addIndexColumn()
+            ->editColumn('type', function ($row)
+            {
+                if($row->type == "balance_withdraw"){
+                    return "회수";
+                }elseif($row->type == "balance_deposit"){
+                    return "출금";
+                }
+                
+            })
             ->addColumn('agent', function ($row)
             {
                 return $row->agent->account;
                 
             })
+            ->addColumn('account', function ($row)
+            {
+                return $row->user->account;
+            })
             ->make(true);
         }
-        return view('admin.user.transactionHistory');
+        return view('user.ruser.transactionHistory');
     }
 
     /**

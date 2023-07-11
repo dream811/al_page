@@ -8,6 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Purple Admin</title>
         <!-- plugins:css -->
         
@@ -34,7 +35,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}" />
         @yield('third_party_stylesheets')        
         @stack('page_css')
-
+        <style>
+          .filter-input{
+            font-size:0.75rem !important; 
+            padding: 5px 10px !important; 
+            min-height:2rem !important;
+          }
+        </style>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed text-xs" data-panel-auto-height-mode="height" >
 <!-- ng-app="myApp" ng-controller="myController" ng-cloak -->

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('user.layouts.app')
 @section('content')
     <div class="content-wrapper">
       <div class="page-header">
@@ -21,77 +21,41 @@
                 <div class="col form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">소속에이전트아이디</span>
+                      <span class="filter-input input-group-text">소속에이전트아이디</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="filter-input form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
                 </div>
                 <div class="col form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">유저아이디</span>
+                      <span class="filter-input input-group-text">유저아이디</span>
                     </div>
-                    <input type="text" class="form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="filter-input form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
                 </div>
                 <div class="col-3 form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">기간</span>
+                      <span class="filter-input input-group-text">기간</span>
                     </div>
-                    <input type="text" class="form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                    <input type="text" class="form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="filter-input form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="filter-input form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
                 </div>
                 <div class="col form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">번호</span>
+                      <span class="filter-input input-group-text">번호</span>
                     </div>
-                    <input type="text" class="form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" class="filter-input form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
                 </div>
                 <div class="col form-group">
-                    <button type="button" class="btn btn-gradient-success float-right" style="text-align:right ;float:right; right:0px;">검색</button>
+                    <button type="button" class="filter-input btn btn-gradient-success float-right" style="text-align:right ;float:right; right:0px;">검색</button>
                 </div>
               </div>
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th> 번호 </th>
-                    <th> 에이전트/유저 </th>
-                    <th> 게임 </th>
-                    <th> 베팅시각 </th>
-                    <th> 처리시각 </th>
-                    <th> 유저 베팅 </th>
-                    <th> 게임 결과 </th>
-                    <th> 금액 </th>
-                    <th> 관리 </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="py-1">
-                      <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
-                    </td>
-                    <td> Herman Beck </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                    <td> $ 77.99 </td>
-                    <td> May 15, 2015 </td>
-                    <td> May 15, 2015 </td>
-                    <td> May 15, 2015 </td>
-                    <td> $ 77.99 </td>
-                    <td>
-                      <button type="button" class="btn btn-xs btn-gradient-primary me-2">수정</button>
-                      <button type="button" class="btn btn-xs btn-gradient-danger">삭제</button>
-                    </td>
-                  </tr>
-                  
-                </tbody>
+              <table id="Table" class="table dataTable no-footer table-hover table-striped text-xs" aria-describedby="order-listing_info" cellspacing="0" width="100%">
               </table>
             </div>
           </div>
@@ -111,87 +75,43 @@
                 }
             });
         });	
-        
-        $('body').on('click', '.btnEdit', function () {
-            var userId = $(this).attr('data-id');
-            window.open('/admin/user/edit/' + userId, '정보 수정', 'scrollbars=1, resizable=1, width=1000, height=620');
-            return false;
-        });
-        $('body').on('change', '.chk-is-use', function () {
-            var status = $(this).is(':checked') ? 1 : 0;
-            if(!confirm('정식회원으로 등록하시겠습니까?')){$(this).prop('checked', status == 1 ? false : true);return}
-            var userId = $(this).attr('data-id');
-            var action = '/admin/user/state/' + userId;
-            
-            $.ajax({
-                url: action,
-                data: {status},
-                type: "POST",
-                dataType: 'json',
-                success: function ({status, data}) {
-                    if(status == "success"){
-                        refreshTable();
-                        alert('정식회원으로 등록하였습니다.');
-                    }else{
-                        alert('정식회원등록에 실패하였습니다.');
+        var table = $('#Table').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollY: "620px",
+            searching: false,
+            pageLength: 100,
+            ajax: {
+                url: "{{ route('user.ruser.transactions') }}",
+                // data: function ( d ) {
+                //     d.txtFrom   = $('#txtFrom').val();
+                //     d.txtTo     = $('#txtTo').val();
+                //     d.txtType   = $('#txtUser').val();
+                // },
+                error: function(xhr, error, thrown) {
+                    if(xhr.status == 401){
+                      location.reload();
                     }
-                },
-                error: function (data) {
                 }
-            });
-        });
-        // $('body').on('click', '.btnDelete', function () {
-        //     if(!confirm('한번삭제한 회원정보는 되살릴수 없습니다. 정말삭제하시겠습니까?')){return}
-        //     var userId = $(this).attr('data-id');
-        //     var action = '/admin/user/edit/' + userId;
-        //     $.ajax({
-        //         url: action,
-        //         data: {status},
-        //         type: "DELETE",
-        //         dataType: 'json',
-        //         success: function ({status, data}) {
-        //             if(status == "success"){
-        //                 $('#userTable').DataTable().ajax.reload();
-        //                 alert('회원을 삭제하였습니다.');
-        //             }else{
-        //                 alert('회원삭제에 실패하였습니다.');
-        //             }
-        //         },
-        //         error: function (data) {
-        //         }
-        //     });
-        // });
-        // $('body').on('click', '.btnAdd', function () {
-        //     window.open('/admin/user/edit/0', '회원추가', 'scrollbars=1, resizable=1, width=1000, height=620');
-        //     return false;
-        // });
-        $('body').on('click', '.btnEditMember', function () {
-            var id = $(this).attr('data-id');
-            window.open('/admin/user/edit/'+id, '정보 추가', 'scrollbars=1, resizable=1, width=800, height=620');
-            return false;
-        });
-        $('body').on('click', '.btnGotoDeposit', function () {
-            var id = $(this).attr('data-id');
-            window.open('/admin/cash/user_cash/0/'+id, '정보 추가', 'scrollbars=1, resizable=1, width=800, height=620');
-            return false;
-        });
-        $('body').on('click', '.btnGotoWithdraw', function () {
-            var id = $(this).attr('data-id');
-            window.open('/admin/cash/user_cash/1/'+id, '정보 추가', 'scrollbars=1, resizable=1, width=800, height=620');
-            return false;
-        });
-        $('body').on('click', '.btnGotoTrading', function () {
-            var id = $(this).attr('data-id');
-            window.open('/admin/calculate/user_trading/'+id, '정보 추가', 'scrollbars=1, resizable=1, width=800, height=620');
-            return false;
-        });
-        $('body').on('click', '.btnGotoResult', function () {
-            var id = $(this).attr('data-id');
-            window.open('/admin/calculate/user_result/'+id, '정보 추가', 'scrollbars=1, resizable=1, width=800, height=620');
-            return false;
+            },
+            columns: [
+                {title: "No", data: 'DT_RowIndex', name: 'DT_RowIndex', 'render' : null, orderable  : false, width: '50px', 'searchable' : false, 'exportable' : false, 'printable'  : true},
+                {title: "소속에이전트", data: 'agent', name: 'agent', className: "text-center"},
+                {title: "유저", data: 'account', name: 'account', className: "text-center"},
+                {title: "타입", data: 'type', name: 'type', className: "text-center"},
+                {title: "처리금액", data: 'amount', name: 'amount', className: "text-center"},
+                {title: "이전금액", data: 'before', name: 'before', className: "text-center"},
+                {title: "처리일", data: 'processed_at', name: 'processed_at', className: "text-center"},
+                
+            ],
+            responsive: true, lengthChange: true,
+            buttons: ["copy", "csv", "excel", "pdf"]
+        }).buttons().container().appendTo('#coinTable_wrapper .col-md-6:eq(0)');
+        $('body').on('click', '.btnSearch', function () {
+            refreshTable();
         });
         function refreshTable() {
-            $('#userTable').DataTable().ajax.reload();
+            $('#Table').DataTable().ajax.reload();
         }
     </script>
 @endpush

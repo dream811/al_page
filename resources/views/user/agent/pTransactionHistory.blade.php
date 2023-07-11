@@ -158,7 +158,6 @@
                 {title: "게임트랜잭션ID", data: 'transaction_id', name: 'transaction_id', className: "text-center", width: '60px'},
                 {title: "타입", data: 'type', name: 'type', className: "text-center", width: '60px',
                     render: function (data, type, row) {
-    
                         if (row.type == "deposit") {
                             return `<span style="color:blue" >입금</span>`;
                         } else {
@@ -166,7 +165,19 @@
                         }
                     }
                 },
-                {title: "서브타입", data: 'sub_type', name: 'sub_type', className: "text-center", width: '60px'},
+                {title: "서브타입", data: 'sub_type', name: 'sub_type', className: "text-center", width: '60px',
+                    render: function (data, type, row) {
+                        if (row.sub_type == "a_deposit") {
+                            return `<span style="color:blue" >자동입금</span>`;
+                        } else if (row.type == "a_withdraw") {
+                            return `<span style="color:red" >자동출금</span>`;
+                        } else if (row.type == "m_withdraw") {
+                            return `<span style="color:red" >수동출금</span>`;
+                        } else if (row.type == "m_withdraw") {
+                            return `<span style="color:red" >수동출금</span>`;
+                        }
+                    }
+                },
                 {title: "처리금액", data: 'balance', name: 'balance', className: "text-right", width: '60px'},
                 {title: "이전금액", data: 'before_balance', name: 'before_balance', className: "text-right", width: '60px'},
                 {title: "현재금액", data: 'after_balance', name: 'after_balance', className: "text-left", width: '60px'},

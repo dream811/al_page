@@ -47,55 +47,8 @@
                     <button type="button" class="btn btn-gradient-success float-right" style="text-align:right ;float:right; right:0px;">검색</button>
                 </div>
               </div>
-              {{-- <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th> 번호 </th>
-                    <th> 소속에이전트 </th>
-                    <th> 유저 </th>
-                    <th> 금월 베팅금 </th>
-                    <th> 금월 당첨금 </th>
-                    <th> 금월 손익금 </th>
-                    <th> 현재 보유금 </th>
-                    <th> 현재 보유포인트 </th>
-                    <th> 가입시각 </th>
-                    <th> 최근 접속시각 </th>
-                    <th> 관리 </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="py-1">
-                      <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
-                    </td>
-                    <td> Herman Beck </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                    <td> $ 77.99 </td>
-                    <td> May 15, 2015 </td>
-                    <td> May 15, 2015 </td>
-                    <td> May 15, 2015 </td>
-                    <td> $ 77.99 </td>
-                    <td>
-                      <button type="button" class="btn btn-xs btn-gradient-primary me-2">수정</button>
-                      <button type="button" class="btn btn-xs btn-gradient-danger">삭제</button>
-                    </td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-               --}}
-               {{-- <td>
-                <label class="badge badge-info">On hold</label>
-              </td>
-              <td>
-                <button class="btn btn-outline-primary btn-xs">View</button>
-              </td> --}}
+              
               <table id="Table" class="table dataTable no-footer table-hover table-striped text-xs" aria-describedby="order-listing_info" cellspacing="0" width="100%">
-                                
               </table>
             </div>
           </div>

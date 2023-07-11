@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Transaction extends Model
+class GameHistory extends Model
 {
     use HasFactory;
-    protected $table = 'tbl_transactions';
+    protected $table = 'tbl_game_history';
     // public $timestamps = false;
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -60,7 +60,12 @@ class Transaction extends Model
     {
         return $this->belongsTo(GameType::class, 'game_type', 'id');
     }
-
+    
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class, 'vendor_id', 'id');
+    }
+    
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
