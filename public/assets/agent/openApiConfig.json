@@ -1,0 +1,2004 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "기본 API",
+        "description": "\n<hr>\n<h2>필수 HTTP 헤더</h2>\n<p>API의 이용과 관련한 모든 HTTP 요청은 아래의 HTTP 헤더를 포함해야 합니다.</p>\n<p>API TOKEN 값은 설정 및 정보에서 확인 하실 수 있습니다.</p>\n<hr>\n<table>\n<thead>\n<tr><th>이름</th><th>값</th><th>예시</th></tr>\n</thead>\n<tbody>\n<tr><td><code>Authorization</code></td><td><code>Bearer {API TOKEN}</code></td><td><code>Authorization: Bearer 26849826-d6a9-11ec-9d64-0242ac120002</code></td></tr>\n<tr><td><code>Accept</code></td><td><code>application/json</code></td><td><code>Accept: application/json</code></td></tr>\n<tr><td><code>Content-Type</code></td><td><code>application/json</code></td><td><code>Content-Type: application/json</code></td></tr>\n</tbody>\n</table>\n<hr>\n<h2>테스트시 인증 정보 전달 방법</h2>\n<p>이 페이지에서 테스트 하실 때는 우측 하단에 <svg fill=\"#49cc90\" height=\"20\" width=\"20\"><svg id=\"unlocked\" viewBox=\"0 0 20 20\"><path d=\"M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z\"></path></svg></svg>\n아이콘을 클릭해 사용할 제공받은 토큰을 입력하여 테스트 하실 수 있습니다.</p>\n<hr>\n<h2>타임존</h2>\n<p>본 API 서비스의 타임존은 협정 세계시(UTC)를 사용하며, 한국 시각(Asia/Seoul)으로 보기 위해선 +9시간을 더 하셔야 합니다.<br>\n반대로 검색하시기 위해선 한국시간 -9 시간을 해주셔야합니다.</p>\n<hr>\n<h2>유저 생성</h2>\n<p>심리스 에이전트의 유저 생성 경우 콜백 API를 모두 구현 후 게임 접속 URL API를 실행 시 자동 생성 됩니다.</p>\n<hr>\n<h2>BET - WIN 연관 관계 정의</h2>\n<h4>1:1 관계</h4>\n<p><code>type</code> 이 <code>win</code> 인 트랜잭션의 <code>data['match_id']</code> 는 <code>bet</code> 트랜잭션의 <code>data['transaction_id']</code> 와 연관 관계를 지을 수 있습니다.</p>\n<h4>1:n 혹은 n:m 관계</h4>\n<p><code>data['game']</code> 과 <code>data['game_id']</code> 의 2가지 컬럼으로 연관 관계를 지을 수 있습니다.</p>\n",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://api.face-api.com/api",
+            "description": "Spade API"
+        }
+    ],
+    "paths": {
+        "/agent": {
+            "get": {
+                "tags": [
+                    "에이전트"
+                ],
+                "summary": "에이전트 정보 조회",
+                "description": "에이전트 정보를 반환합니다.",
+                "operationId": "2b246afcb54951cba60c3ccb19fe0024",
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "account": {
+                                                    "type": "string",
+                                                    "example": "test"
+                                                },
+                                                "nickname": {
+                                                    "type": "string",
+                                                    "example": "테스트"
+                                                },
+                                                "balance": {
+                                                    "type": "number",
+                                                    "example": "1000000"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/game": {
+            "get": {
+                "tags": [
+                    "게임&로비 정보"
+                ],
+                "summary": "게임&로비 리스트 조회",
+                "description": "<code>game_key</code> 는 변경되지 않는 고유값 입니다.<br>\r\n로비 접속은 <code>type</code> 이 <code>lobby</code> 인 데이터의 <code>game_key</code> 를 사용하시면 됩니다.",
+                "operationId": "ee9d3d7c332c48e805bc388474996fb3",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/vendor_key"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "game_list": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "vendor_key": {
+                                                                "type": "string",
+                                                                "example": "evolution"
+                                                            },
+                                                            "game_key": {
+                                                                "type": "string",
+                                                                "example": "oqic5sqbt25322zm"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "example": "blackjack"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "example": "https://bshots.egcvi.com/thumbnail/bj_vipr14_med_L.jpg"
+                                                            },
+                                                            "names": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "language": {
+                                                                            "type": "string",
+                                                                            "example": "ko"
+                                                                        },
+                                                                        "name": {
+                                                                            "type": "string",
+                                                                            "example": "Blackjack VIP Beta"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/game-key": {
+            "get": {
+                "tags": [
+                    "게임&로비 정보"
+                ],
+                "summary": "게임키 리스트 조회",
+                "description": "해당 api endpoint의 <code>game_key</code>는 참고용으로 사용해주시기 바랍니다. (트랜잭션의 game-key를 해석하기 위한 용도로만 사용되어야합니다)",
+                "operationId": "ce58dbeab968311783866fc32b867090",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/vendor_key"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "game_list": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "vendor_key": {
+                                                                "type": "string",
+                                                                "example": "evolution"
+                                                            },
+                                                            "game_key": {
+                                                                "type": "string",
+                                                                "example": "oqic5sqbt25322zm"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "example": "blackjack"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "example": "https://bshots.egcvi.com/thumbnail/bj_vipr14_med_L.jpg"
+                                                            },
+                                                            "names": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "language": {
+                                                                            "type": "string",
+                                                                            "example": "ko"
+                                                                        },
+                                                                        "name": {
+                                                                            "type": "string",
+                                                                            "example": "Blackjack VIP Beta"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/game-url": {
+            "get": {
+                "tags": [
+                    "게임 접속"
+                ],
+                "summary": "게임&로비 접속 URL",
+                "description": "게임&로비를 접속할 수 있는 URL을 반환합니다.<br>\r\n해당 API는 유저당 1분간 10회 요청할 수 있습니다.<br>\r\nnickname (유저 닉네임) 입력 시 인게임 표기되는 닉네임이 업데이트 됩니다.",
+                "operationId": "aeba20ad06ee35399144debcbe5c0a03",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/vendor_key"
+                    },
+                    {
+                        "$ref": "#/components/parameters/game_key"
+                    },
+                    {
+                        "$ref": "#/components/parameters/account"
+                    },
+                    {
+                        "$ref": "#/components/parameters/nickname_not_req"
+                    },
+                    {
+                        "$ref": "#/components/parameters/platform"
+                    },
+                    {
+                        "$ref": "#/components/parameters/language"
+                    },
+                    {
+                        "$ref": "#/components/parameters/user_ip"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "url": {
+                                                    "type": "string",
+                                                    "example": "http://게임접속URL"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transaction": {
+            "get": {
+                "tags": [
+                    "트랜잭션"
+                ],
+                "summary": "트랜잭션 리스트 및 상세내역 조회",
+                "description": "트랜잭션 리스트와 상세내역을 반환합니다.\r\n<h2>[1] 첫번째 요청 후 두번째 요청 시 각 요청사이는 최소 <code>30초</code> 이상 딜레이를 주셔야 합니다.</h2>\r\n<h2>[2] 검색 기간은 반드시 <code>1시간 이내</code> 로 전송</h2>\r\n<h2>[3] 최신 데이터가 제일 처음에 위치 합니다.</h2>\r\n<h2>[4] page 값에 따라 딜레이는 별도 제한 됩니다.</h2>\r\n<h2>ex) 1페이지 호출, 2페이지 호출 각각 30초 딜레이</h2>\r\n상세내역 detail의 값은 게임사별로 상이 할 수 있습니다.<br>\r\nprocessed_at 값이 null 일 경우 상세내역이 갱신되지 않은 것을 의미합니다.",
+                "operationId": "4eb4b5ddffefbe8d1f42b514d37570b5",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/start_date"
+                    },
+                    {
+                        "$ref": "#/components/parameters/end_date"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/perPage"
+                    },
+                    {
+                        "$ref": "#/components/parameters/withDetails"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "transaction_list": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "D123456789"
+                                                            },
+                                                            "transaction_id": {
+                                                                "type": "string",
+                                                                "example": "D123456789"
+                                                            },
+                                                            "vendor": {
+                                                                "type": "string",
+                                                                "example": "evolution"
+                                                            },
+                                                            "game_type": {
+                                                                "type": "string",
+                                                                "example": "baccarat"
+                                                            },
+                                                            "game": {
+                                                                "type": "string",
+                                                                "example": "onokyd4wn7uekbjx"
+                                                            },
+                                                            "round_id": {
+                                                                "type": "string",
+                                                                "example": "123456789"
+                                                            },
+                                                            "game_id": {
+                                                                "type": "string",
+                                                                "example": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "example": "bet"
+                                                            },
+                                                            "amount": {
+                                                                "type": "number",
+                                                                "example": "10000"
+                                                            },
+                                                            "before": {
+                                                                "type": "number",
+                                                                "example": "500000"
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "success"
+                                                            },
+                                                            "user_info": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "account": {
+                                                                            "type": "string",
+                                                                            "example": "유저 아이디"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "detail": {
+                                                                "type": "string",
+                                                                "example": "베팅 상세내역 조회시 반환"
+                                                            },
+                                                            "processed_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01 00:00:00"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01T00:00:00.000000Z"
+                                                            },
+                                                            "match_id": {
+                                                                "type": "string",
+                                                                "example": null
+                                                            },
+                                                            "is_bonus": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_jackpot": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_promo": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_free_game": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "original_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01T00:00:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "example": [
+                                                        {
+                                                            "index": 2,
+                                                            "transaction_id": "C123456789",
+                                                            "vendor": "evolution",
+                                                            "game_type": "baccarat",
+                                                            "game": "onokyd4wn7uekbjx",
+                                                            "round_id": "123456789",
+                                                            "game_id": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb",
+                                                            "type": "내역 타입 (bet, win)",
+                                                            "amount": 200000,
+                                                            "before": 400000,
+                                                            "status": "내역 상태 (success, cancel)",
+                                                            "user_info": {
+                                                                "account": "유저 아이디"
+                                                            },
+                                                            "detail": "베팅 상세내역 조회시 반환",
+                                                            "processed_at": "상세내역 처리 일자 (2023-01-01 00:00:00)",
+                                                            "created_at": "내역 처리 일자 (2023-01-01T00:00:00.000000Z)",
+                                                            "match_id": "D123456789",
+                                                            "is_bonus": "보너스 여부 (true, false)",
+                                                            "is_jackpot": "잭팟 여부 (true, false)",
+                                                            "is_promo": "프로모션 여부 (true, false)",
+                                                            "is_free_game": "프리게임 여부 (true, false)",
+                                                            "original_at": "게임사 내역 처리 일자 (2023-01-01T00:00:00.000000Z)"
+                                                        },
+                                                        {
+                                                            "index": 1,
+                                                            "transaction_id": "D123456789",
+                                                            "vendor": "evolution",
+                                                            "game_type": "baccarat",
+                                                            "game": "onokyd4wn7uekbjx",
+                                                            "round_id": "123456789",
+                                                            "game_id": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb",
+                                                            "type": "내역 타입 (bet, win)",
+                                                            "amount": 100000,
+                                                            "before": 500000,
+                                                            "status": "내역 상태 (success, cancel)",
+                                                            "user_info": {
+                                                                "account": "유저 아이디"
+                                                            },
+                                                            "detail": "베팅 상세내역 조회시 반환",
+                                                            "processed_at": "상세내역 처리 일자 (2023-01-01 00:00:00)",
+                                                            "created_at": "내역 처리 일자 (2023-01-01T00:00:00.000000Z)",
+                                                            "match_id": null,
+                                                            "is_bonus": "보너스 여부 (true, false)",
+                                                            "is_jackpot": "잭팟 여부 (true, false)",
+                                                            "is_promo": "프로모션 여부 (true, false)",
+                                                            "is_free_game": "프리게임 여부 (true, false)",
+                                                            "original_at": "게임사 내역 처리 일자 (2023-01-01T00:00:00.000000Z)"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transaction-date": {
+            "get": {
+                "tags": [
+                    "트랜잭션"
+                ],
+                "summary": "트랜잭션 date 리스트 및 상세내역 조회",
+                "description": "last_date를 이용하여 트랜잭션 리스트와 상세내역을 반환합니다.\r\n<h2>[1] 같은 last_date 를 호출할 경우 <code>30초</code> 이상 딜레이를 주셔야 합니다.</h2>\r\n<h2>[2] last_date를 이용해 create_at 기준으로 검색합니다.</h2>\r\n<h2>[3] 최초 호출 이후 반환된 <code>last_date</code> 값을 넣으시면 됩니다.</h2>\r\n<h2>[4] 최신 데이터가 제일 마지막에 위치 합니다.</h2>\r\n상세내역 detail의 값은 게임사별로 상이 할 수 있습니다.<br>\r\nprocessed_at 값이 null 일 경우 상세내역이 갱신되지 않은 것을 의미합니다.",
+                "operationId": "b456c88adfe82b57a09335951a8054d4",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/last_date"
+                    },
+                    {
+                        "$ref": "#/components/parameters/limit"
+                    },
+                    {
+                        "$ref": "#/components/parameters/with_details"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "current_total_count": {
+                                                    "type": "number",
+                                                    "example": "현재 데이터 수"
+                                                },
+                                                "last_date": {
+                                                    "type": "number",
+                                                    "example": "현재 마지막 데이터 date"
+                                                },
+                                                "transaction_list": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "transaction_id": {
+                                                                "type": "string",
+                                                                "example": "D123456789"
+                                                            },
+                                                            "vendor": {
+                                                                "type": "string",
+                                                                "example": "evolution"
+                                                            },
+                                                            "game_type": {
+                                                                "type": "string",
+                                                                "example": "baccarat"
+                                                            },
+                                                            "game": {
+                                                                "type": "string",
+                                                                "example": "onokyd4wn7uekbjx"
+                                                            },
+                                                            "round_id": {
+                                                                "type": "string",
+                                                                "example": "123456789"
+                                                            },
+                                                            "game_id": {
+                                                                "type": "string",
+                                                                "example": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "example": "bet"
+                                                            },
+                                                            "amount": {
+                                                                "type": "number",
+                                                                "example": "10000"
+                                                            },
+                                                            "before": {
+                                                                "type": "number",
+                                                                "example": "500000"
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "success"
+                                                            },
+                                                            "user_info": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "account": {
+                                                                            "type": "string",
+                                                                            "example": "유저 아이디"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "detail": {
+                                                                "type": "string",
+                                                                "example": "베팅 상세내역 조회시 반환"
+                                                            },
+                                                            "processed_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01 00:00:00"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01T00:00:00.000000Z"
+                                                            },
+                                                            "match_id": {
+                                                                "type": "string",
+                                                                "example": null
+                                                            },
+                                                            "is_bonus": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_jackpot": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_promo": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_free_game": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "original_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01T00:00:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "example": [
+                                                        {
+                                                            "index": 1,
+                                                            "transaction_id": "D123456789",
+                                                            "vendor": "evolution",
+                                                            "game_type": "baccarat",
+                                                            "game": "onokyd4wn7uekbjx",
+                                                            "round_id": "123456789",
+                                                            "game_id": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb",
+                                                            "type": "내역 타입 (bet, win)",
+                                                            "amount": 100000,
+                                                            "before": 500000,
+                                                            "status": "내역 상태 (success, cancel)",
+                                                            "user_info": {
+                                                                "account": "유저 아이디"
+                                                            },
+                                                            "detail": "베팅 상세내역 조회시 반환",
+                                                            "processed_at": "상세내역 처리 일자 (2023-01-01 00:00:00)",
+                                                            "created_at": "내역 처리 일자 (2023-01-01T00:00:00.000000Z)",
+                                                            "match_id": null,
+                                                            "is_bonus": "보너스 여부 (true, false)",
+                                                            "is_jackpot": "잭팟 여부 (true, false)",
+                                                            "is_promo": "프로모션 여부 (true, false)",
+                                                            "is_free_game": "프리게임 여부 (true, false)",
+                                                            "original_at": "게임사 내역 처리 일자 (2023-01-01T00:00:00.000000Z)"
+                                                        },
+                                                        {
+                                                            "index": 2,
+                                                            "transaction_id": "C123456789",
+                                                            "vendor": "evolution",
+                                                            "game_type": "baccarat",
+                                                            "game": "onokyd4wn7uekbjx",
+                                                            "round_id": "123456789",
+                                                            "game_id": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb",
+                                                            "type": "내역 타입 (bet, win)",
+                                                            "amount": 200000,
+                                                            "before": 400000,
+                                                            "status": "내역 상태 (success, cancel)",
+                                                            "user_info": {
+                                                                "account": "유저 아이디"
+                                                            },
+                                                            "detail": "베팅 상세내역 조회시 반환",
+                                                            "processed_at": "상세내역 처리 일자 (2023-01-01 00:00:00)",
+                                                            "created_at": "내역 처리 일자 (2023-01-01T00:00:00.000000Z)",
+                                                            "match_id": "D123456789",
+                                                            "is_bonus": "보너스 여부 (true, false)",
+                                                            "is_jackpot": "잭팟 여부 (true, false)",
+                                                            "is_promo": "프로모션 여부 (true, false)",
+                                                            "is_free_game": "프리게임 여부 (true, false)",
+                                                            "original_at": "게임사 내역 처리 일자 (2023-01-01T00:00:00.000000Z)"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transaction-relation": {
+            "get": {
+                "tags": [
+                    "트랜잭션"
+                ],
+                "summary": "트랜잭션 연관관계 내역 조회",
+                "description": "트랜잭션 BET-WIN 연관관계 리스트를 반환합니다.\r\n<h2>[1] 호출할 경우 <code>10초</code> 이상 딜레이를 주셔야 합니다.</h2>\r\n상세내역 detail의 값은 게임사별로 상이 할 수 있습니다.<br>\r\nprocessed_at 값이 null 일 경우 상세내역이 갱신되지 않은 것을 의미합니다.",
+                "operationId": "c6ca2873d2a2bcf0db50c0f66bf7db4a",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/transaction_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "transaction_list": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "transaction_id": {
+                                                                "type": "string",
+                                                                "example": "D123456789"
+                                                            },
+                                                            "vendor": {
+                                                                "type": "string",
+                                                                "example": "evolution"
+                                                            },
+                                                            "game_type": {
+                                                                "type": "string",
+                                                                "example": "baccarat"
+                                                            },
+                                                            "game": {
+                                                                "type": "string",
+                                                                "example": "onokyd4wn7uekbjx"
+                                                            },
+                                                            "round_id": {
+                                                                "type": "string",
+                                                                "example": "123456789"
+                                                            },
+                                                            "game_id": {
+                                                                "type": "string",
+                                                                "example": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "example": "bet"
+                                                            },
+                                                            "amount": {
+                                                                "type": "number",
+                                                                "example": "0"
+                                                            },
+                                                            "before": {
+                                                                "type": "number",
+                                                                "example": "4969650"
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "success"
+                                                            },
+                                                            "user_info": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "account": {
+                                                                            "type": "string",
+                                                                            "example": "유저 아이디"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "detail": {
+                                                                "type": "string",
+                                                                "example": "베팅 상세내역"
+                                                            },
+                                                            "processed_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01 00:00:00"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01T00:00:00.000000Z"
+                                                            },
+                                                            "match_id": {
+                                                                "type": "string",
+                                                                "example": null
+                                                            },
+                                                            "is_bonus": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_jackpot": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_promo": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "is_free_game": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "original_at": {
+                                                                "type": "string",
+                                                                "example": "2023-01-01T00:00:00.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "example": [
+                                                        {
+                                                            "index": 2,
+                                                            "transaction_id": "C123456789",
+                                                            "vendor": "evolution",
+                                                            "game_type": "baccarat",
+                                                            "game": "onokyd4wn7uekbjx",
+                                                            "round_id": "123456789",
+                                                            "game_id": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb",
+                                                            "type": "내역 타입 (bet, win)",
+                                                            "amount": 200000,
+                                                            "before": 400000,
+                                                            "status": "내역 상태 (success, cancel)",
+                                                            "user_info": {
+                                                                "account": "유저 아이디"
+                                                            },
+                                                            "detail": "베팅 상세내역 조회시 반환",
+                                                            "processed_at": "상세내역 처리 일자 (2023-01-01 00:00:00)",
+                                                            "created_at": "내역 처리 일자 (2023-01-01T00:00:00.000000Z)",
+                                                            "match_id": "D123456789",
+                                                            "is_bonus": "보너스 여부 (true, false)",
+                                                            "is_jackpot": "잭팟 여부 (true, false)",
+                                                            "is_promo": "프로모션 여부 (true, false)",
+                                                            "is_free_game": "프리게임 여부 (true, false)",
+                                                            "original_at": "게임사 내역 처리 일자 (2023-01-01T00:00:00.000000Z)"
+                                                        },
+                                                        {
+                                                            "index": 1,
+                                                            "transaction_id": "D123456789",
+                                                            "vendor": "evolution",
+                                                            "game_type": "baccarat",
+                                                            "game": "onokyd4wn7uekbjx",
+                                                            "round_id": "123456789",
+                                                            "game_id": "16eebfc789f4c98be9e2764d-qc45nw4eugtzxdjb",
+                                                            "type": "내역 타입 (bet, win)",
+                                                            "amount": 100000,
+                                                            "before": 500000,
+                                                            "status": "내역 상태 (success, cancel)",
+                                                            "user_info": {
+                                                                "account": "유저 아이디"
+                                                            },
+                                                            "detail": "베팅 상세내역 조회시 반환",
+                                                            "processed_at": "상세내역 처리 일자 (2023-01-01 00:00:00)",
+                                                            "created_at": "내역 처리 일자 (2023-01-01T00:00:00.000000Z)",
+                                                            "match_id": null,
+                                                            "is_bonus": "보너스 여부 (true, false)",
+                                                            "is_jackpot": "잭팟 여부 (true, false)",
+                                                            "is_promo": "프로모션 여부 (true, false)",
+                                                            "is_free_game": "프리게임 여부 (true, false)",
+                                                            "original_at": "게임사 내역 처리 일자 (2023-01-01T00:00:00.000000Z)"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/create": {
+            "post": {
+                "tags": [
+                    "유저"
+                ],
+                "summary": "유저 생성",
+                "description": "유저를 생성하고 유저 정보를 반환합니다.",
+                "operationId": "194758f47e11043abf527f53d7a3df19",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/account"
+                    },
+                    {
+                        "$ref": "#/components/parameters/nickname"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "account": {
+                                                    "type": "string",
+                                                    "example": "test"
+                                                },
+                                                "nickname": {
+                                                    "type": "string",
+                                                    "example": "test"
+                                                },
+                                                "balance": {
+                                                    "type": "number",
+                                                    "example": "10000"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "유저"
+                ],
+                "summary": "유저 정보 조회",
+                "description": "유저 정보를 반환합니다.<br>\r\n해당 API는 유저당 1초에 1회 요청할 수 있습니다.",
+                "operationId": "16ad51e6d91b9b5a440c20463497dacf",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/account"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "account": {
+                                                    "type": "string",
+                                                    "example": "test"
+                                                },
+                                                "nickname": {
+                                                    "type": "string",
+                                                    "example": "test"
+                                                },
+                                                "balance": {
+                                                    "type": "number",
+                                                    "example": "10000"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/deposit-balance": {
+            "post": {
+                "tags": [
+                    "유저 머니"
+                ],
+                "summary": "유저 머니 지급",
+                "description": "유저 머니를 지급 합니다.<br>\r\n해당 API는 유저당 1초에 1회 요청할 수 있습니다.",
+                "operationId": "55bef900a121660b4b86f49b72625f62",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/account"
+                    },
+                    {
+                        "$ref": "#/components/parameters/amount"
+                    },
+                    {
+                        "$ref": "#/components/parameters/request_key"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "account": {
+                                                    "type": "string",
+                                                    "example": "test"
+                                                },
+                                                "balance": {
+                                                    "type": "number",
+                                                    "example": "처리 후 유저 잔액"
+                                                },
+                                                "amount": {
+                                                    "type": "number",
+                                                    "example": "처리금액"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/withdraw-balance": {
+            "post": {
+                "tags": [
+                    "유저 머니"
+                ],
+                "summary": "유저 머니 회수",
+                "description": "유저 머니를 회수 합니다.<br>\r\n해당 API는 유저당 1초에 1회 요청할 수 있습니다.",
+                "operationId": "5565b3fde8adf21c6673ebc634967b82",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/account"
+                    },
+                    {
+                        "$ref": "#/components/parameters/amount"
+                    },
+                    {
+                        "$ref": "#/components/parameters/request_key"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "account": {
+                                                    "type": "string",
+                                                    "example": "test"
+                                                },
+                                                "balance": {
+                                                    "type": "number",
+                                                    "example": "처리 후 유저 잔액"
+                                                },
+                                                "amount": {
+                                                    "type": "number",
+                                                    "example": "처리금액"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/withdraw-balance-all": {
+            "post": {
+                "tags": [
+                    "유저 머니"
+                ],
+                "summary": "유저 머니 일괄 회수",
+                "description": "유저 머니를 일괄 회수 합니다.<br>\r\n해당 API는 유저당 1초에 1회 요청할 수 있습니다.<br>\r\n유저 머니가 0원 일 경우 회수 트랜잭션은 생성되지 않습니다.",
+                "operationId": "b90e42a1cc5b3e1bbd62b4c7bebb5b9e",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/account"
+                    },
+                    {
+                        "$ref": "#/components/parameters/request_key"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "account": {
+                                                    "type": "string",
+                                                    "example": "test"
+                                                },
+                                                "balance": {
+                                                    "type": "number",
+                                                    "example": "처리 후 유저 잔액"
+                                                },
+                                                "amount": {
+                                                    "type": "number",
+                                                    "example": "처리금액"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vendor": {
+            "get": {
+                "tags": [
+                    "벤더 정보"
+                ],
+                "summary": "벤더 리스트 조회",
+                "description": "게임 리스트 조회에 필요한 <code>vendor_key</code> 를 반환합니다.",
+                "operationId": "40863af8499bfe6c322595d3a07121e4",
+                "responses": {
+                    "200": {
+                        "description": "성공 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "0"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "vendor_list": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "vendor_key": {
+                                                                "type": "string",
+                                                                "example": "evolution"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "에볼루션 카지노"
+                                                            },
+                                                            "category": {
+                                                                "type": "string",
+                                                                "example": "casino"
+                                                            },
+                                                            "sort": {
+                                                                "type": "number",
+                                                                "example": "정렬 순서"
+                                                            },
+                                                            "zero_win": {
+                                                                "type": "number",
+                                                                "example": "제로윈 여부(지원:1 미지원:0)"
+                                                            },
+                                                            "maintenance": {
+                                                                "type": "number",
+                                                                "example": "점검 여부(점검:1 정상:0)"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "실패 반환",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "number",
+                                            "example": "112"
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "ko"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "에러 내용"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "vendor_key": {
+                "name": "vendor_key",
+                "in": "query",
+                "description": "벤더 key",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "game_key": {
+                "name": "game_key",
+                "in": "query",
+                "description": "게임 key",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "account": {
+                "name": "account",
+                "in": "query",
+                "description": "유저 아이디 (4 ~ 15자리)",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "platform": {
+                "name": "platform",
+                "in": "query",
+                "description": "게임 실행 기기 환경 (WEB, MOBILE) - 기본값 : WEB",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "language": {
+                "name": "language",
+                "in": "query",
+                "description": "게임 언어 (ko, en) - 기본값 : ko",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "user_ip": {
+                "name": "user_ip",
+                "in": "query",
+                "description": "유저 아이피 (실제 클라이언트 이용하는 유저 아이피 입력)",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "amount": {
+                "name": "amount",
+                "in": "query",
+                "description": "요청금액 (최솟값: 1)",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "request_key": {
+                "name": "request_key",
+                "in": "query",
+                "description": "중복 방지 요청 키 (1 ~ 16자리)",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "nickname": {
+                "name": "nickname",
+                "in": "query",
+                "description": "유저 닉네임 (2 ~ 15자리)",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "nickname_not_req": {
+                "name": "nickname",
+                "in": "query",
+                "description": "유저 닉네임 (2 ~ 15자리)",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "last_date": {
+                "name": "last_date",
+                "in": "query",
+                "description": "YYYY-MM-DD HH:mm:ss.v (UTC+0 기준: 한국시간 -9시간) (2023-01-01T12:30:00.150000Z)",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "start_date": {
+                "name": "start_date",
+                "in": "query",
+                "description": "YYYY-MM-DD HH:mm:ss (UTC+0 기준: 한국시간 -9시간)",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "end_date": {
+                "name": "end_date",
+                "in": "query",
+                "description": "YYYY-MM-DD HH:mm:ss (UTC+0 기준: 한국시간 -9시간)",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "last_index": {
+                "name": "last_index",
+                "in": "query",
+                "description": "초기값 \"0\" 이후 반환값 last_index 필드 값을 넣으시면 됩니다.",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "page": {
+                "name": "page",
+                "in": "query",
+                "description": "현재 페이지",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "perPage": {
+                "name": "perPage",
+                "in": "query",
+                "description": "페이지당 표시 개수 (최대 1000개)",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "limit": {
+                "name": "limit",
+                "in": "query",
+                "description": "요청 개수 (최대 1000개)",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "with_details": {
+                "name": "with_details",
+                "in": "query",
+                "description": "베팅 상세내역 포함 조회 여부 (조회: 1, 미조회: 0)",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "withDetails": {
+                "name": "withDetails",
+                "in": "query",
+                "description": "베팅 상세내역 포함 조회 여부 (조회: 1, 미조회: 0)",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "transaction_id": {
+                "name": "transaction_id",
+                "in": "query",
+                "description": "트랜잭션 ID",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "description": "<a href=\"/settings\">설정 및 정보 페이지</a>에서 발급 받은 API TOKEN을 입력해주세요.",
+                "scheme": "Bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "에이전트",
+            "description": "에이전트 API"
+        },
+        {
+            "name": "유저",
+            "description": "유저 API"
+        },
+        {
+            "name": "유저 머니",
+            "description": "유저 머니 API <code>(트랜스퍼 전용)</code>"
+        },
+        {
+            "name": "벤더 정보",
+            "description": "벤더 정보 API"
+        },
+        {
+            "name": "게임&로비 정보",
+            "description": "게임&로비 정보 API"
+        },
+        {
+            "name": "게임 접속",
+            "description": "게임 접속 API"
+        },
+        {
+            "name": "트랜잭션",
+            "description": "트랜잭션 API"
+        }
+    ]
+}

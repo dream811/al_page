@@ -34,10 +34,7 @@
         </div>
       </div>
     </div>
-    
-    
   </div>
-  
 </div>
 <script src="{{asset('plugins/swagger-ui/swagger-ui-apikey-auth-form.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.19.5/swagger-ui-bundle.js"> </script>
@@ -1123,88 +1120,10 @@
           SwaggerUIApiKeyAuthFormPlugin,
         ],
         layout: "StandaloneLayout",
-        configs: {
-          apiKeyAuthFormPlugin: {
-            forms: {
-              api_key: {
-                fields: {
-                  client: {
-                    type: 'checkbox',
-                    label: 'Client',
-                    inputProps: {
-                      onChange(evt) {
-                        const userFields = document.querySelectorAll('.swUI-AKF-userField');
-                        const clientFields = document.querySelectorAll('.swUI-AKF-clientField');
-                        const show = (el) => { el.closest('.wrapper').style.display = 'block'; };
-                        const hide = (el) => { el.closest('.wrapper').style.display = 'none'; };
-
-                        userFields.forEach(evt.target.checked ? hide : show);
-                        clientFields.forEach(evt.target.checked ? show : hide);
-                      }
-                    },
-                  },
-                  username: {
-                    type: 'text',
-                    label: 'Username',
-                    initialValue: 'hans',
-                    inputProps: {
-                      className: 'swUI-AKF-userField'
-                    }
-                  },
-                  password: {
-                    type: 'password',
-                    label: 'Password',
-                    inputProps: {
-                      className: 'swUI-AKF-userField'
-                    }
-                  },
-                  clientId: {
-                    type: 'text',
-                    label: 'ClientId',
-                    initialValue: 'test',
-                    rowProps: {
-                      style: { display: 'none' }
-                    },
-                    inputProps: {
-                      className: 'swUI-AKF-clientField'
-                    }
-                  },
-                  clientSecret: {
-                    type: 'password',
-                    label: 'ClientSecret',
-                    rowProps: {
-                      style: { display: 'none' }
-                    },
-                    inputProps: {
-                      className: 'swUI-AKF-clientField',
-                    }
-                  }
-                },
-                authCallback: function(values, callback) {
-                  if (values.client === 'on') {
-                    if (values.clientId === 'client' && values.clientSecret === 'client-secret') {
-                      callback(null, 'special-key');
-                    } else {
-                      callback('invalid client credentials');
-                    }
-                  } else {
-                    if (values.username === 'user' && values.password === 'secret') {
-                      callback(null, 'special-key');
-                    } else {
-                      callback('invalid user credentials');
-                    }
-                  }
-                }
-              }
-            },
-            localStorage: {
-              api_key: {}
-            }
-          }
-        }
+        
       });
 
-        window.ui = ui;
+        // window.ui = ui;
         // addAuthButton()
       }      
     </script>
