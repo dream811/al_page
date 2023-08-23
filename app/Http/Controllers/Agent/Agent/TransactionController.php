@@ -58,7 +58,7 @@ class TransactionController extends Controller
             ->make(true);
         }
         
-        return view('user.agent.cTransactionHistory');
+        return view('agent.agent.cTransactionHistory');
     }
 
     /**
@@ -82,7 +82,7 @@ class TransactionController extends Controller
             ->make(true);
         }
         
-        return view('user.agent.pTransactionHistory');
+        return view('agent.agent.pTransactionHistory');
     }
 
 }

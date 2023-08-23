@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAuthController;
-use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\AgentAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,13 +14,13 @@ use App\Http\Controllers\UserAuthController;
 |
 */
 ///agent
-// Route::get('/', [UserAuthController::class, 'index'])->name('user.home')->middleware("auth:web");
-Route::get('/login', [UserAuthController::class, 'login'])->name('user.login');
-Route::get('/logout', [UserAuthController::class, 'logout'])->name('user.logout');
-Route::post('/login', [UserAuthController::class, 'handleLogin'])->name('user.handleLogin');
-Route::middleware("auth:web")->name('user.')->group(
+// Route::get('/', [AgentAuthController::class, 'index'])->name('user.home')->middleware("auth:web");
+Route::get('/login', [AgentAuthController::class, 'login'])->name('agent.login');
+Route::get('/logout', [AgentAuthController::class, 'logout'])->name('agent.logout');
+Route::post('/login', [AgentAuthController::class, 'handleLogin'])->name('agent.handleLogin');
+Route::middleware("auth:web")->name('agent.')->group(
     function () {
-        Route::get('/', [UserAuthController::class, 'index'])->name('home');
+        Route::get('/', [AgentAuthController::class, 'index'])->name('home');
         
         Route::get('/mypage',                       [App\Http\Controllers\Agent\HomeController::class, 'mypage'])->name('mypage');
         Route::post('/changeMyInfo/{type}',         [App\Http\Controllers\Agent\HomeController::class, 'changeMyInfo'])->name('changeMyInfo');
@@ -78,6 +78,19 @@ Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin
 Route::post('/admin/login', [AdminAuthController::class, 'handleLogin'])->name('admin.handleLogin');
 Route::prefix('admin')->name('admin.')->middleware('auth:webadmin')->group(//
     function () {
-        Route::get('/', [AdminAuthController::class, 'index'])->name('home');
+        Route::get('/',                             [AdminAuthController::class, 'index'])->name('home');
+        Route::get('/user/users',                   [App\Http\Controllers\Admin\User\UserController::class, 'index'])->name('user.users');
+    
+        Route::get('/agent/agents',                 [App\Http\Controllers\Admin\Agent\AgentController::class, 'agentList'])->name('agent.agents');
+        Route::get('/agent/company',                [App\Http\Controllers\Admin\Agent\AgentController::class, 'company'])->name('agent.company');
+        Route::get('/agent/agentDetail/{id}',       [App\Http\Controllers\Admin\Agent\AgentController::class, 'agentDetail'])->name('agent.agentDetail');
+
+        Route::get('/company/vendors',              [App\Http\Controllers\Admin\Company\CompanyController::class, 'vendors'])->name('company.vendors');
+        Route::get('/company/vcompanies',           [App\Http\Controllers\Admin\Company\CompanyController::class, 'vcompanies'])->name('company.vcompanies');
+        Route::get('/company/gcompanies',           [App\Http\Controllers\Admin\Company\CompanyController::class, 'gcompanies'])->name('company.gcompanies');
+
+        Route::get('/vcompany/games',               [App\Http\Controllers\Admin\Agent\CompanyController::class, 'games'])->name('agent.games');
+        Route::get('/game/status',                  [App\Http\Controllers\Admin\Game\GameController::class, 'status'])->name('game.status');
     }
+
 );

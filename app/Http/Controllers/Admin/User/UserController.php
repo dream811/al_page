@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\RUser;
 use App\Models\Bank;
 use DateTime;
 use Illuminate\Support\Facades\Hash;
@@ -30,19 +30,24 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        return view('admin.user.userList');
+        $title="유저목록";
+        $fromDate = date("Y-m-d", strtotime("-1 months"));
+        $toDate = date("Y-m-d");
+        if ($request->ajax()) {
+            $users = RUser::all();
+            return DataTables::of($users)
+            ->addIndexColumn()
+            ->addColumn('agent', function ($row)
+            {
+                return $row->agent->account;
+                
+            })
+            ->make(true);
+        }
+        return view('admin.user.userList', compact('title'));
     }
 
-    public function list(Request $request)
-    {
-        return view('admin.user.list');
-    }
-
-    public function transaction(Request $request)
-    {
-        return view('admin.user.transaction');
-    }
-
+    
     /**
      * Show the application dashboard.
      *

@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function index()
     {
         // $deposit = Cash::where
-        return view('user.home');
+        return view('agent.home');
     }
 
     /**
@@ -42,7 +42,7 @@ class HomeController extends Controller
      */
     public function mypage(Request $request)
     {
-        return view('user.mypage');
+        return view('agent.mypage');
     }
 
     /**
@@ -52,17 +52,17 @@ class HomeController extends Controller
      */
     public function betLimit(Request $request)
     {
-        return view('user.betLimit');
+        return view('agent.betLimit');
     }
 
     public function dailyReport(Request $request)
     {
-        return view('user.dailyReport');
+        return view('agent.dailyReport');
     }
 
     public function notifications(Request $request)
     {
-        return view('user.notifications');
+        return view('agent.notifications');
     }
 
 

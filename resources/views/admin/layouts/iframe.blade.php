@@ -152,7 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @yield('third_party_stylesheets')        
         @stack('page_css')
     </head>
-    <body ng-app="myApp" ng-controller="myController" class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height" ng-cloak>
+    <body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
 
     <input type="hidden" name="admin_id" id="admin_id" value="{{Auth::user()->id}}">
         <input type="hidden" id="id_main" value="0">
@@ -199,7 +199,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         
         @yield('third_party_scripts')
         @yield('script')
-        @stack('page_scripts')
-        
+        @stack('page_scripts')        
     </body>
 </html>

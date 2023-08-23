@@ -46,7 +46,7 @@ class UserController extends Controller
             })
             ->make(true);
         }
-        return view('user.ruser.userList');
+        return view('agent.ruser.userList');
     }
 
     public function list(Request $request)

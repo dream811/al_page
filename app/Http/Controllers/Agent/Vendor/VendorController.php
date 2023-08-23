@@ -43,7 +43,7 @@ class VendorController extends Controller
             })
             ->make(true);
         }
-        return view('user.vendor.vendorList');
+        return view('agent.vendor.vendorList');
     }
 
     public function list(Request $request)

@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Game extends Model
 {
     use HasFactory;
-    protected $table = 'tbl_games';
+    protected $table = 'tbl_game_products';
     // public $timestamps = false;
     protected $primaryKey = 'id';
     protected $fillable = [

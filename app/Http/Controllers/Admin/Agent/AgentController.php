@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Agent;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Bank;
+use App\Models\VideoCompany;
+use App\Models\GameCompany;
 use DateTime;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -40,7 +42,53 @@ class AgentController extends Controller
      */
     public function agentList(Request $request)
     {
-        return view('admin.agent.agentList');
+        $title = "에이전트 목록";
+        if ($request->ajax()) {
+            $agents = Agent::orderBy('tree_list')->get();
+            // return response()->json(["status" => "success", "data" => $agents]);
+
+            //$users = User::where('tree_list', 'LIKE', '%('.Auth::id().')%')->get();
+            return DataTables::of($agents)
+            ->addIndexColumn()
+            ->addColumn('upper', function ($row)
+            {
+                if($row->upperAgent != null){
+                    return $row->upperAgent->account;    
+                }
+                return "";
+            })
+            ->editColumn('level_id', function($row){
+                return $row->level->name;
+            })
+            ->make(true);
+        }
+        return view('admin.agent.agentList', compact('title'));
+    }
+
+    public function agentDetail($id)
+    {
+        $title = "상세";
+        $agent = Agent::find($id);
+
+        $agentId = $id;
+        // return response()->json(["status" => "success", "data" => $agent]);
+        return view('admin.agent.agentDetail', compact('agentId', 'title', 'agent'));
+    }
+
+    /**
+     * 게임사 설정.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function company(Request $request)
+    {
+        $title = "게임사 설정";
+        // $agents = Agent::where('state', 1)->get();
+        $agents = Agent::get();
+
+        $vcompanies = VideoCompany::get();
+        $gcompanies = GameCompany::get();
+        return view('admin.agent.company', compact('title', 'agents', 'vcompanies', 'gcompanies'));
     }
 
     /**

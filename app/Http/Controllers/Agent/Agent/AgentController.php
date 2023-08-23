@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Agent\Agent;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Agent;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,10 +41,10 @@ class AgentController extends Controller
     public function agentTree(Request $request)
     {
         if ($request->ajax()) {
-            $agents = User::all();
+            $agents = Agent::all();
             return response()->json(["status" => "success", "data" => $agents]);
         }
-        return view('user.agent.agentTree');
+        return view('agent.agent.agentTree');
     }
 
     /**
@@ -58,8 +58,8 @@ class AgentController extends Controller
             // $agents = User::all();
             // return response()->json(["status" => "success", "data" => $agents]);
 
-            $users = User::where('tree_list', 'LIKE', '%('.Auth::id().')%')->get();
-            return DataTables::of($users)
+            $agents = Agent::where('tree_list', 'LIKE', '%('.Auth::id().')%')->get();
+            return DataTables::of($agents)
             ->addIndexColumn()
             ->addColumn('upper', function ($row)
             {
@@ -73,7 +73,7 @@ class AgentController extends Controller
             })
             ->make(true);
         }
-        return view('user.agent.agentList');
+        return view('agent.agent.agentList');
     }
 
     /**
@@ -83,9 +83,22 @@ class AgentController extends Controller
      */
     public function agentDetail($id)
     {
-            $agent = User::find($id);
-            return response()->json(["status" => "success", "data" => $agent]);
+        $agent = Agent::find($id);
+        return response()->json(["status" => "success", "data" => $agent]);
+        // return view('admin.agent.agentDetail');
     }
+
+
+    /**
+     * 게임사 설정.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function company(Request $request)
+    {
+        return view('admin.agent.company');
+    }
+
 
     /**
      * Show the application dashboard.

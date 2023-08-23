@@ -34,7 +34,7 @@ class DeveloperController extends Controller
         $title = "파트너관리";
 
         
-        return view('user.developer.list');
+        return view('agent.developer.list');
     }
 
     
@@ -46,7 +46,7 @@ class DeveloperController extends Controller
     public function openApi(Request $request)
     {
         //$key = implode('-', str_split(substr(strtoupper(md5(microtime().rand(1000, 9999))), 0, 30), 6));
-        return view('user.developer.openApi');
+        return view('agent.developer.openApi');
     }
 
     /**
@@ -56,17 +56,17 @@ class DeveloperController extends Controller
      */
     public function callbackOpenApi(Request $request)
     {
-        return view('user.developer.callbackOpenApi');
+        return view('agent.developer.callbackOpenApi');
     }
 
     public function callbackOpenApiTest(Request $request)
     {
-        return view('user.developer.callbackOpenApiTest');
+        return view('agent.developer.callbackOpenApiTest');
     }
 
     public function callbackOpenApiLog(Request $request)
     {
-        return view('user.developer.callbackOpenApiLog');
+        return view('agent.developer.callbackOpenApiLog');
     }
 
     /**
@@ -76,7 +76,7 @@ class DeveloperController extends Controller
      */
     public function apiErrorLog(Request $request)
     {
-        return view('user.developer.apiErrorLog');
+        return view('agent.developer.apiErrorLog');
     }
 
     public function guidv4($data = null) {

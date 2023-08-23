@@ -45,7 +45,7 @@ class GameController extends Controller
             // })
             ->make(true);
         }
-        return view('user.game.gameHistory');
+        return view('agent.game.gameHistory');
     }
 
     public function gameHistory(Request $request)
@@ -86,7 +86,7 @@ class GameController extends Controller
             // })
             ->make(true);
         }
-        return view('user.game.gameHistory');
+        return view('agent.game.gameHistory');
     }
 
     public function betLimit(Request $request)
@@ -119,7 +119,7 @@ class GameController extends Controller
             })
             ->make(true);
         }
-        return view('user.game.betLimit');
+        return view('agent.game.betLimit');
     }
     
 }

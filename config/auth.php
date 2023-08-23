@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'agents',
         ],
 
         'webadmin' => [
@@ -71,9 +71,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'agents' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Agent::class,
         ],
 
         'admins' => [

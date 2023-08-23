@@ -59,7 +59,7 @@ class TransactionController extends Controller
             })
             ->make(true);
         }
-        return view('user.ruser.transactionHistory');
+        return view('agent.ruser.transactionHistory');
     }
 
     /**

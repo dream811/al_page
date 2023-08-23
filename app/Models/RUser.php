@@ -3,17 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class RUser extends Model
 {
+    // use HasUuids;
     use HasFactory;
     protected $table = 'tbl_users';
     // public $timestamps = false;
-    protected $primaryKey = 'uuid';
+    protected $primaryKey = 'id';
+    // protected $keyType = 'string';
+    // public $incrementing = false;
+
     protected $fillable = [
-        'uuid',
         'agent_id',
         'account',
         'nickname',
@@ -28,7 +32,7 @@ class RUser extends Model
 
     public function agent()
     {
-        return $this->belongsTo(User::class, 'agent_id', 'id');
+        return $this->belongsTo(Agent::class, 'agent_id', 'id');
     }
     
     public function getCreatedAtAttribute($value)
