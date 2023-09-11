@@ -12,6 +12,8 @@
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
+  <meta http-equiv="refresh" content="{{ config('session.lifetime') * 60 }}">
+  <!-- Theme style -->
   <link rel="stylesheet" href="/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">

@@ -44,7 +44,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">User Management</a></li>
+                    <li class="breadcrumb-item"><a href="#">Company</a></li>
                     <li class="breadcrumb-item active">{{$title}}</li>
                     </ol>
                 </div><!-- /.col -->
@@ -58,67 +58,74 @@
             <div class="col-12 col-sm-12">
                 <div class="card card-primary card-outline card-tabs" style="height:790px">
                     <div class="card-header p-0 pt-1 border-bottom-0">
-                        
-                        {{-- <ul class="nav float-right">
-                            <li class="pull-right float-right pr-1 pt-1" style="">
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm btnAdd" >New</a>
+                        <ul class="nav float-right">
+                            <li class="pull-right float-right pr-4 pt-1" style="">
+                                <a href="javascript:void(0)" class="btn btn-success btn-sm btnAdd" >보관</a>
                             </li>
-                        </ul> --}}
+                        </ul>
                     </div>
                     <div class="card-body" >
                         <div class="row">
-                            <div class="col-3">
-                                <div class="card card-row card-primary">
+                            <div class="col-6">
+                                <div class="card card-primary">
                                     <div class="card-header">
-                                      <h3 class="card-title" style="font-size: 15px; font-weight: bold;">에이전트</h3>
+                                      <h3 class="card-title" style="font-size: 15px; font-weight: bold;">게임사</h3>
                                     </div>
-                                    <style>
-                                        .nav-pills .nav-item.active > a {
-                                            color: #007bff;
-                                        }
-                                    </style>
-                                    <div class="card-body p-0" id="agentPanel"  style="height:700px; overflow: auto" >
-                                        <ul class="nav nav-pills flex-column" id="agentList">
-                                            @foreach ($agents as $agent)
-                                            <li class="nav-item agent" data-id="{{$agent->id}}">
+                                    <div class="card-body p-0" id="gcompanyPanel" style="height:700px;">
+                                        <ul class="nav nav-pills flex-column gcompanyList">
+                                            {{-- <li class="nav-item active" data-id="ㅏ">
                                                 <a href="#" class="nav-link">
-                                                <i class="fas fa-inbox"></i> 
-                                                {{$agent->nickname}}
-                                                <code>{{'@'.$agent->account}}</code>
-                                                <span class="badge bg-primary float-right"></span>
+                                                <i class="fas fa-inbox"></i> 이름
+                                                <span class="float-right">
+                                                    <div class="form-group mb-0">
+                                                        <div class="custom-control custom-switch">
+                                                            <span>사용/미사용</span>
+                                                            <span>수정</span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                                </a>
+                                            </li> --}}
+                                            @foreach ($gcompanies as $company)
+                                            <li class="nav-item active gcompany" data-id="{{$company->id}}">
+                                                <a href="#" class="nav-link">
+                                                <i class="fas fa-inbox"></i> {{$company->name}}
+                                                {{-- <span class="float-right">
+                                                    <div class="form-group mb-0">
+                                                        <div class="custom-control custom-switch">
+                                                            <input type="checkbox" class="custom-control-input chk-is-use" id="{{$company->name}}">
+                                                            <label class="custom-control-label" for="{{$company->name}}"></label>
+
+                                                            <button class="btn btn-xs btn-primary">보관</button>
+                                                        </div>
+                                                    </div>
+                                                </span> --}}
                                                 </a>
                                             </li>
                                             @endforeach
-                                            {{--                                             
-                                            <li class="nav-item active">
-                                                <a href="#" class="nav-link">
-                                                    <i class="fas fa-home"></i> asdf
-                                                <span class="badge bg-primary float-right">asdf</span>
-                                                </a>
-                                            </li> --}}
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-6">
                                 <div class="card card-primary">
                                     <div class="card-header">
                                       <h3 class="card-title" style="font-size: 15px; font-weight: bold;">영상사</h3>
                                     </div>
                                     
-                                    <div class="card-body p-0" id="companyPanel" style="height:700px;">
-                                        <ul class="nav nav-pills flex-column companyList" >
+                                    <div class="card-body p-0" id="vcompanyPanel" style="height:700px;">
+                                        <ul class="nav nav-pills flex-column vcompanyList" >
                                             @foreach ($vcompanies as $company)
-                                            <li class="nav-item company" data-id="{{$company->key}}">
+                                            <li class="nav-item vcompany" data-id="{{$company->key}}">
                                                 <a href="#" class="nav-link">
                                                 <i class="fas fa-inbox"></i> {{$company->name}}
                                                 <span class="float-right">
-                                                    {{-- <div class="form-group mb-0">
+                                                    <div class="form-group mb-0">
                                                         <div class="custom-control custom-switch">
                                                           <input type="checkbox" class="custom-control-input" id="{{$company->name}}">
                                                           <label class="custom-control-label" for="{{$company->name}}"></label>
                                                         </div>
-                                                    </div> --}}
+                                                    </div>
                                                 </span>
                                                 </a>
                                             </li>
@@ -129,48 +136,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                      <h3 class="card-title" style="font-size: 15px; font-weight: bold;">게임사</h3>
-                                    </div>
-                                    <div class="card-body p-0" id="gamePanel" style="height:700px;">
-                                        <ul class="nav nav-pills flex-column gameList">
-                                            <li class="nav-item active" data-id="{{$company->key}}">
-                                                <a href="#" class="nav-link">
-                                                <i class="fas fa-inbox"></i> 이름
-                                                <span class="float-right">
-                                                    <div class="form-group mb-0">
-                                                        <div class="custom-control custom-switch">
-                                                            
-                                                            <span>상태</span>
-                                                            <span>수정</span>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                </a>
-                                            </li>
-                                            @foreach ($gcompanies as $company)
-                                            <li class="nav-item active" data-id="{{$company->id}}">
-                                                <a href="#" class="nav-link">
-                                                <i class="fas fa-inbox"></i> {{$company->name}}
-                                                <span class="float-right">
-                                                    <div class="form-group mb-0">
-                                                        <div class="custom-control custom-switch">
-                                                            <input type="checkbox" class="custom-control-input chk-is-use" id="{{$company->name}}">
-                                                            <label class="custom-control-label" for="{{$company->name}}"></label>
-
-                                                            <button class="btn btn-xs btn-primary">보관</button>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                </a>
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -191,33 +157,27 @@
         });	
         $("[name='my-checkbox']").bootstrapSwitch();       
         
-        
-        $('body').on('click', '.agent', function () {
-            var agentId = $(this).attr('data-id');
-            $('.agent.active').removeClass('active');
-            $(this).addClass('active');
-            // $('.agent.active').removeClass('active');
-            $('.company.active').removeClass('active');
-            var html =`<li class="nav-item">
-                <a href="#" class="nav-link">
-                게임사를 선택하세요
-                <span class="float-right">
+        // $('body').on('click', '.gcompany', function () {
+        //     var agentId = $(this).attr('data-id');
+        //     $('.gcompany.active').removeClass('active');
+        //     $(this).addClass('active');
+        //     // $('.agent.active').removeClass('active');
+        //     $('.gcompany.active').removeClass('active');
+        //     var html =`<li class="nav-item">
+        //         <a href="#" class="nav-link">
+        //         기본설정으로 이용될 게임사를 선택하세요
+        //         <span class="float-right">
                 
-                </span>
-                </a>
-            </li>`
-            $('.gameList').html(html);
-        });
+        //         </span>
+        //         </a>
+        //     </li>`
+        //     $('.gcompanyList').html(html);
+        // });
 
-        $('body').on('click', '.company', function () {
+        $('body').on('click', '.gcompany', function () {
             var companyKey = $(this).attr('data-id');
-            var agentId = $('.agent.active').attr('data-id');
-            if(agentId == undefined){
-                alert('에이전트를 선택해주세요')
-                $(this).prop('checked', false);
-                return;
-            }
-            $('.company.active').removeClass('active');
+            
+            $('.gcompany.active').removeClass('active');
             $(this).addClass('active');
             var action = '/admin/vcompany/games';
             
@@ -235,7 +195,6 @@
                                 <a href="#" class="nav-link">
                                 자료가 없습니다
                                 <span class="float-right">
-                                
                                 </span>
                                 </a>
                             </li>`
@@ -255,9 +214,7 @@
                                                 <!-- <label style="text-align:right;width:200px;cursor: pointer;padding-right: 40px;>${element.name}</label>-->
                                                 <input type="checkbox" class="custom-control-input chk-is-use" ${checked} data-id="${element.id}" id="${element.name}">
                                                 <label class="custom-control-label" for="${element.name}"></label>
-                                                
                                                 <button class="btn btn-xs btn-primary">설정</button>
-                                                
                                             </div>
                                         </div>
                                     </span>

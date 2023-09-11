@@ -25,8 +25,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('user', UserController::class);
     //Route::apiResource('customers', CustommersController::class);
     ///////////////////////* 블레스4벳 START *////////////////////////////
-    Route::get('launchGame', [App\Http\Controllers\Api\V1\Bless4BetSendController::class, 'LaunchGame']);
-    Route::get('getGameList', [App\Http\Controllers\Api\V1\Bless4BetSendController::class, 'GetGameList']);
+    Route::get('/b4b/launchGame', [App\Http\Controllers\Api\V1\Bless4BetSendController::class, 'LaunchGame']);
+    Route::get('/b4b/getGameList', [App\Http\Controllers\Api\V1\Bless4BetSendController::class, 'GetGameList']);
 
     //Seamless
     Route::post('/b4b/Seamless/GetBalance',         [App\Http\Controllers\Api\V1\Bless4BetRecvController::class, 'GetBalance']);
@@ -42,12 +42,12 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     ///////////////////////* 블레스4벳 END *////////////////////////////
     ///////////////////////* 아너링크 START *////////////////////////////
 
-    Route::get('getAgentInfo', [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
-    Route::get('getAgentInfo', [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
-    Route::get('getAgentInfo', [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
-    Route::get('getAgentInfo', [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
-    Route::get('getAgentInfo', [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
-    Route::get('getAgentInfo', [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
+    Route::get('/honorlink/launchGame',             [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'LaunchGame']);
+    Route::get('/honorlink/getEAGameList',          [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'getEAGameList']);
+    Route::get('/honorlink/getAgentInfo',           [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
+    Route::get('/honorlink/getAgentInfo',           [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
+    Route::get('/honorlink/getAgentInfo',           [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
+    Route::get('/honorlink/getAgentInfo',           [App\Http\Controllers\Api\V1\HonorLinkSendController::class, 'GetAgentInfo']);
 
     Route::get('/honorlink/Seamless/balance',       [App\Http\Controllers\Api\V1\HonorLinkRecvController::class, 'GetBalance']);
     Route::post('/honorlink/Seamless/changeBalance',[App\Http\Controllers\Api\V1\HonorLinkRecvController::class, 'ChangeBalance']);

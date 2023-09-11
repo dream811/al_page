@@ -76,6 +76,14 @@
 						</a>
 					</li>
 				</ul>
+				<ul class="nav nav-treeview">
+					<li class="nav-item">
+						<a href="{{ route('admin.company.default') }}" class="nav-link {{ (request()->routeIs('admin.company.default')) ? 'active' : '' }}">
+							<i class="fab fa-youtube"></i>
+							<p>기본설정</p>
+						</a>
+					</li>
+				</ul>
 			</li>
 			<li class="nav-item {{ (request()->routeIs('admin.agent*')) ? 'menu-open' : '' }}">
 				<a href="#" class="nav-link {{ (request()->routeIs('admin.agent*')) ? 'active' : '' }}"> <i class="fas fa-address-card"></i>

@@ -18,12 +18,11 @@ class Transaction extends Model
         'transaction_id',
         'amount',
         'before',
+        'after',
         'vendor',
         'game',
         'game_id',
         'game_type',
-        'created_at',
-        'updated_at',
         'is_bonus',
         'is_free_game',
         'is_jackpot',
@@ -39,6 +38,8 @@ class Transaction extends Model
         'status',
         'timestamp',
         'detail',
+        'created_at',
+        'updated_at',
     ];
 
     public function agent()

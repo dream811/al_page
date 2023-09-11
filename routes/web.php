@@ -88,9 +88,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth:webadmin')->group(//
         Route::get('/company/vendors',              [App\Http\Controllers\Admin\Company\CompanyController::class, 'vendors'])->name('company.vendors');
         Route::get('/company/vcompanies',           [App\Http\Controllers\Admin\Company\CompanyController::class, 'vcompanies'])->name('company.vcompanies');
         Route::get('/company/gcompanies',           [App\Http\Controllers\Admin\Company\CompanyController::class, 'gcompanies'])->name('company.gcompanies');
+        Route::get('/company/default',              [App\Http\Controllers\Admin\Company\CompanyController::class, 'default'])->name('company.default');
 
         Route::get('/vcompany/games',               [App\Http\Controllers\Admin\Agent\CompanyController::class, 'games'])->name('agent.games');
         Route::get('/game/status',                  [App\Http\Controllers\Admin\Game\GameController::class, 'status'])->name('game.status');
+        Route::get('/game/vcompanies',              [App\Http\Controllers\Admin\Game\GameController::class, 'vcompanies'])->name('game.vcompanies');
     }
 
 );

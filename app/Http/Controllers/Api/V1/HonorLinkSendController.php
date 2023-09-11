@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DateTime;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 //아너링크 api
 class HonorLinkSendController extends Controller
 {
@@ -38,11 +39,11 @@ class HonorLinkSendController extends Controller
         $strResp = curl_exec($ch);
         curl_close($ch);
 
-        DB::table('tbl_api_honorlink_log')->insert([
-            'strUrl' =>  "/user/create",
-            'strParam' => "username=$strID&nickname=$strAlias",
-            'strResp' => $strResp,
-            'strTime' => $this->getTime()
+        DB::table('tbl_honorlink_log')->insert([
+            'url' =>  "/user/create",
+            'param' => "username=$strID&nickname=$strAlias",
+            'response' => $strResp,
+            'time' => $this->getTime()
         ]);
 
         $objResp = json_decode($strResp);
@@ -75,7 +76,6 @@ class HonorLinkSendController extends Controller
         // ]);
 
         $objResp = json_decode($strResp);
-
         return $objResp->token;
     }
 
@@ -156,7 +156,7 @@ class HonorLinkSendController extends Controller
 
     public function getEAGameList() {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "$this->strExtraEvoApiDomain/game-list?vendor=habanero");
+        curl_setopt($ch, CURLOPT_URL, "$this->strExtraEvoApiDomain/game-list?vendor=evolution");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $headers = array(
             "Authorization: Bearer $this->strExtraEvoApiKey",
@@ -175,7 +175,6 @@ class HonorLinkSendController extends Controller
         // ]);
 
         $objResp = json_decode($strResp);
-
         return $objResp;
     }
 
@@ -210,6 +209,28 @@ class HonorLinkSendController extends Controller
         return redirect("$this->strExtraEvoApiDomain/open?game_id=$strGameID&token=$strToken&vendor=$strProvider");
     }
 
+    public function getGameLaunchLink($strGameID, $strID, $strVendorID){
+        $strToken = $this->getEAToken($strID);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "$this->strExtraEvoApiDomain/game-launch-link?username=$strID&nickname=$strID&game_id=$strGameID&vendor=$strVendorID");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $headers = array(
+            "Authorization: Bearer $this->strExtraEvoApiKey",
+            "Accept: application/json",
+            'Cotent-Type: application/json'
+        );
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $strResp = curl_exec($ch);
+        curl_close($ch);
+
+        $objResp = json_decode($strResp);
+        if(property_exists($objResp, 'errors')){
+            return response()->json(['status' => "failed", 'data' => $objResp ]);
+        }else{
+            return response()->json(['status' => "success", 'data' => $objResp ]);
+        }
+    }
+
     public function getAgentInfo(Request $request) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->strExtraEvoApiDomain."/my-info");
@@ -237,4 +258,22 @@ class HonorLinkSendController extends Controller
         return $objResp->balance;
     }
     
+    //
+    public function LaunchGame() {
+
+        $strID = "user123";
+        $strGameID = "evolution_game_shows";//evolution_game_shows//vivo_baccarat
+        $strVendor = "evolution";
+        // $this->createEAUser($strID, $strID);
+        $strToken = $this->getEAToken($strID);
+        $strUrl = "$this->strExtraEvoApiDomain/open?game_id=$strGameID&token=$strToken&vendor=$strVendor";
+        //return redirect($strUrl);
+
+        return $this->getGameLaunchLink($strGameID, $strID, $strVendor);
+    }
+
+    public function getTime() {
+        // return time();
+        return Carbon::now();
+    }
 }

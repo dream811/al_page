@@ -99,9 +99,38 @@
         });
         
         $('body').on('click', '.btnEdit', function () {
+            // var userId = $(this).attr('data-id');
+            // window.open('/admin/user/edit/' + userId, 'Edit Info', 'scrollbars=1, resizable=1, width=1000, height=620');
+            // return false;
+
             var userId = $(this).attr('data-id');
-            window.open('/admin/user/edit/' + userId, 'Edit Info', 'scrollbars=1, resizable=1, width=1000, height=620');
-            return false;
+            
+            //
+            var action = "http://devall77.com/api/v1/honorlink/launchGame";
+            //window.open(action, 'Game', 'scrollbars=1, resizable=1, width=1000, height=820');
+            $.ajax({
+                url: action,
+                data: {userId},
+                type: "GET",
+                dataType: 'json',
+                success: function ({status, data}) {
+                    if(status == "success"){
+                        console.log(data.link);
+                        //alert('Successfully changed.');
+                        window.open(data.link, 'Game1', 'scrollbars=1, resizable=1, width=1000, height=820');
+                    }else{
+                        // alert('Failed to launch game.');
+                    }
+                },
+                error: function (data) {
+                }
+            });
+
+        });
+        $('body').on('click', '.btnDelete', function () {
+            var action = "http://devall77.com/api/v1/honorlink/getEAGameList";
+            window.open(action, 'Game2', 'scrollbars=1, resizable=1, width=1000, height=820');
+            
         });
 
         $('body').on('click', '.btnPlay', function () {
@@ -109,7 +138,7 @@
             
             // if(!confirm('You really want to play game?-->'+ userId)){return}
             
-            var action = "http://devall77.com/api/v1/launchGame";//http://devall77.com/api/v1/b4b/Seamless/GameResult
+            var action = "http://devall77.com/api/v1/b4b/launchGame";//http://devall77.com/api/v1/b4b/Seamless/GameResult
             // var action = "http://devall77.com/api/v1/b4b/Seamless/GameResult";//http://devall77.com/api/v1/b4b/Seamless/GameResult
             $.ajax({
                 url: action,
@@ -120,7 +149,7 @@
                     if(status == "success"){
                         console.log(0);
                         //alert('Successfully changed.');
-                        window.open(data.Url, 'Game', 'scrollbars=1, resizable=1, width=1000, height=820');
+                        window.open(data.Url, 'Game3', 'scrollbars=1, resizable=1, width=1000, height=820');
                     }else{
                         // alert('Failed to launch game.');
                     }
@@ -136,7 +165,7 @@
             
             //if(!confirm('You really want to play game?-->'+ userId)){return}
             
-            var action = "http://devall77.com/api/v1/getGameList";
+            var action = "http://devall77.com/api/v1/b4b/getGameList";
             $.ajax({
                 url: action,
                 data: {status},
@@ -145,7 +174,7 @@
                 success: function ({status, data}) {
                     if(status == "success"){
                         //alert('Successfully changed.');
-                        window.open(data.Url, 'Game', 'scrollbars=1, resizable=1, width=1000, height=820');
+                        window.open(data.Url, 'Game4', 'scrollbars=1, resizable=1, width=1000, height=820');
                     }else{
                         alert('Failed to launch game.');
                     }
@@ -178,27 +207,27 @@
                 }
             });
         });
-        $('body').on('click', '.btnDelete', function () {
-            if(!confirm('You really want to delete this user?')){return}
-            var userId = $(this).attr('data-id');
-            var action = '/admin/user/edit/' + userId;
-            $.ajax({
-                url: action,
-                data: {status},
-                type: "DELETE",
-                dataType: 'json',
-                success: function ({status, data}) {
-                    if(status == "success"){
-                        $('#userTable').DataTable().ajax.reload();
-                        alert('Successfully removed.');
-                    }else{
-                        alert('Failed to remove');
-                    }
-                },
-                error: function (data) {
-                }
-            });
-        });
+        // $('body').on('click', '.btnDelete', function () {
+        //     if(!confirm('You really want to delete this user?')){return}
+        //     var userId = $(this).attr('data-id');
+        //     var action = '/admin/user/edit/' + userId;
+        //     $.ajax({
+        //         url: action,
+        //         data: {status},
+        //         type: "DELETE",
+        //         dataType: 'json',
+        //         success: function ({status, data}) {
+        //             if(status == "success"){
+        //                 $('#userTable').DataTable().ajax.reload();
+        //                 alert('Successfully removed.');
+        //             }else{
+        //                 alert('Failed to remove');
+        //             }
+        //         },
+        //         error: function (data) {
+        //         }
+        //     });
+        // });
         $('body').on('click', '.btnAdd', function () {
             window.open('/admin/user/edit/0', 'Add Member', 'scrollbars=1, resizable=1, width=700, height=620');
             return false;

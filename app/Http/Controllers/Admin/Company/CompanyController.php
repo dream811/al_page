@@ -128,5 +128,16 @@ class CompanyController extends Controller
         }
         return view('admin.company.gcompanyList', compact('title'));
     }
+    /**
+     * Show default company & game setting page
+     *  
+     */
+    public function default(Request $request)
+    {
+        $title = "기본설정";
+        $vcompanies = VideoCompany::get();
+        $gcompanies = GameCompany::get();
+        return view('admin.company.defaultSetting', compact('title', 'gcompanies', 'vcompanies'));
+    }
 
 }

@@ -31,7 +31,7 @@ class Bless4BetSendController extends Controller
     }
 
     /**
-     * req
+     * Get open Game page link
      * 
      * 
      */
